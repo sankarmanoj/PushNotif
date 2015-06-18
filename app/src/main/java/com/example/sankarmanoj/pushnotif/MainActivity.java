@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -21,6 +22,7 @@ public class MainActivity extends Activity {
     InstanceID instanceID;
     String token;
     TextView TV1;
+    Boolean registered = false;
     String ProjectID = "authentic-light-87814";
     GoogleCloudMessaging GCM;
     @Override
@@ -29,6 +31,17 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         GCM = GoogleCloudMessaging.getInstance(getApplicationContext());
         TV1 = (TextView)findViewById(R.id.textView);
+        TV1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TV1 ",TV1.getText().toString());
+                if(registered==false)
+                {
+                    RegisterGCM runner = new RegisterGCM();
+                    runner.execute();
+                }
+            }
+        });
         RegisterGCM runner =  new RegisterGCM();
         runner.execute();
     }
@@ -49,6 +62,7 @@ public class MainActivity extends Activity {
             {
                 msg = GCM.register("354667777132");
                 Log.d("GCM","reg id = "+msg);
+                registered=true;
             }
             catch (IOException e)
             {
