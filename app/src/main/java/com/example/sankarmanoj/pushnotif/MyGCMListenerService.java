@@ -37,7 +37,7 @@ public class MyGCMListenerService extends IntentService {
         Log.d("GCM",messageType);
         if(!extras.isEmpty())
         {
-            sendNotification(extras.toString());
+            sendNotification(extras.getString("message"));
         }
         MyGCMReceiver.completeWakefulIntent(intent);
     }
@@ -51,8 +51,8 @@ public class MyGCMListenerService extends IntentService {
                 new Intent(this, MainActivity.class), 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                this).setSmallIcon(android.R.drawable.sym_call_incoming)
-                .setContentTitle("GCM Notification")
+                this).setSmallIcon(android.R.drawable.radiobutton_off_background)
+                .setContentTitle("Sankar Says")
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentText(msg);
 
